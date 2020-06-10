@@ -1,7 +1,7 @@
 "Games"
 {
-    "csgo"
-    {
+	"csgo"
+	{
 		"Keys"
 		{
 			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
