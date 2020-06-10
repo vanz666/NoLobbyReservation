@@ -1,0 +1,111 @@
+"Games"
+{
+    "csgo"
+    {
+		"Keys"
+		{
+			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
+			{
+				"windows" "30 C0"
+				"linux" "30 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch1"
+			{
+				"windows" "30 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch2"
+			{
+				"windows" "30 C0"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch3"
+			{
+				"windows" "00"
+				"linux" "00 00 00 00"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch4"
+			{
+				"windows" "00"
+				"linux" "00 00 00 00"
+			}
+		}
+
+		"Offsets"
+		{
+			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
+			{
+				"windows" "7"
+				"linux" "19"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch1"
+			{
+				"windows" "994"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch2"
+			{
+				"windows" "1428"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch3"
+			{
+				"windows" "1534"
+				"linux" "1001"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch4"
+			{
+				"windows" "1548"
+				"linux" "1009"
+			}
+		}
+		
+		"Addresses"
+		{
+			"CBaseServer::IsExclusiveToLobbyConnections"
+			{
+				"windows"
+				{
+					"signature"	"CBaseServer::IsExclusiveToLobbyConnections"
+				}
+				"linux"
+				{
+					"signature"	"CBaseServer::IsExclusiveToLobbyConnections"
+				}
+			}
+		
+			"CBaseServer::ReplyChallenge"
+			{
+				"windows"
+				{
+					"signature"	"CBaseServer::ReplyChallenge"
+				}
+				"linux"
+				{
+					"signature"	"CBaseServer::ReplyChallenge"
+				}
+			}
+		}
+	
+        "Signatures"
+        {
+			"CBaseServer::IsExclusiveToLobbyConnections"
+			{
+				"library" "engine"
+				"windows" "\x8B\x01\x8B\x40\x5C\xFF\xD0\x84\xC0\x75\x01"
+				"linux" "\x55\x89\xE5\x83\xEC\x2A\x8B\x45\x2A\x8B\x10\x89\x04\x24\xFF\x52\x2A\x31\xD2"
+			}
+		
+            "CBaseServer::ReplyChallenge"
+            {
+                "library" "engine"
+                "windows" "\x55\x8B\xEC\x83\xE4\xF8\x81\xEC\x2A\x2A\x2A\x2A\x53\x8B\x5D\x08\x56\x57\x53"
+				"linux" "\x55\x89\xE5\x57\x56\x53\x81\xEC\x2A\x2A\x2A\x2A\x8B\x5D\x2A\x8B\x45\x2A\x89\x1C\x24"
+            }
+        }
+    }
+}
