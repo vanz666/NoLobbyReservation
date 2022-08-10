@@ -6,6 +6,10 @@
 		{
 			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
 			{
+				/* 
+					原始汇编代码 84 C0 test al, al
+					更改后为 30 C0 xor al, al
+				*/
 				"windows" "30 C0"
 				"linux" "30 C0"
 			}
@@ -31,34 +35,86 @@
 				"windows" "00"
 				"linux" "00 00 00 00"
 			}
+
+			
+			"CBaseServer::IsExclusiveToLobbyConnections_Patch_Check"
+			{
+				/* 
+					原始汇编代码 84 C0 test al, al
+					更改后为 30 C0 xor al, al
+				*/
+				"windows" "84 C0"
+				"linux" "84 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch1_Check"
+			{
+				"windows" "84 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch2_Check"
+			{
+				"windows" "84 C0"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch3_Check"
+			{
+				"windows" "FF"
+				"linux" "FF FF FF FF"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch4_Check"
+			{
+				"windows" "FF"
+				"linux" "FF FF FF FF"
+			}
 		}
 
 		"Offsets"
 		{
 			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
 			{
+				/*	linux 
+					test    al, al 
+				*/
 				"windows" "7"
 				"linux" "19"
 			}
 		
 			"CBaseServer::ReplyChallenge_Patch1"
 			{
+				/*
+					存在字符串 connect-retry
+					汇编代码 test al, al
+				*/
 				"windows" "994"
 			}
 		
 			"CBaseServer::ReplyChallenge_Patch2"
 			{
+				/*
+					存在字符串 public
+					汇编代码 test al, al
+				*/
 				"windows" "1428"
 			}
 		
 			"CBaseServer::ReplyChallenge_Patch3"
 			{
+				/*
+					linux LobbyID mov dword ptr [esp+4], 0FFFFFFFFh
+					windows LobbyID push 0FFFFFFFFh
+				*/
 				"windows" "1534"
 				"linux" "1001"
 			}
 			
 			"CBaseServer::ReplyChallenge_Patch4"
 			{
+				/*
+					linux LobbyID mov dword ptr [esp+8], 0FFFFFFFFh
+					windows LobbyID push 0FFFFFFFFh
+				*/
 				"windows" "1548"
 				"linux" "1009"
 			}
@@ -93,13 +149,18 @@
 
 		"Signatures"
 		{
+			/*	目标函数在此字符串上方
+			   	"Server only accepting connections from game lobby %s %d.\n"
+			*/
 			"CBaseServer::IsExclusiveToLobbyConnections"
 			{
 				"library" "engine"
 				"windows" "\x8B\x01\x8B\x40\x5C\xFF\xD0\x84\xC0\x75\x2A\xC3"
 				"linux" "\x55\x89\xE5\x83\xEC\x18\x8B\x45\x08\x8B\x10\x89\x04\x24\xFF\x52\x60\x31\xD2"
 			}
-		
+			/*	目标函数存在字符串
+				"Server running with server_is_unavailable, ignoring challenge from %s\n"
+			 */
 			"CBaseServer::ReplyChallenge"
 			{
 				"library" "engine"

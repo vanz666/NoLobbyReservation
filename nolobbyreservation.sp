@@ -15,7 +15,9 @@ enum struct mem_patch
 {
 	Address addr;
 	int len;
+	int lencheck;
 	char patch[256];
+	char patchcheck[256];
 	char orig[256];
 
 	bool Init(GameData conf, const char[] key, Address addr)
@@ -66,6 +68,39 @@ enum struct mem_patch
 		for (int i = 0; i < this.len; i++)
 			StoreToAddress(this.addr + view_as<Address>(i), this.orig[i], NumberType_Int8);
 	}
+
+	bool Check(GameData conf, const char[] key)
+	{
+		int pos, curPos;
+		char byte[16], bytes[512];
+		
+		if (this.lencheck)
+			return false;
+		
+		if (!conf.GetKeyValue(key, bytes, sizeof(bytes)))
+			return false;
+		
+		StrCat(bytes, sizeof(bytes), " ");
+		
+		while ((pos = SplitString(bytes[curPos], " ", byte, sizeof(byte))) != -1)
+		{
+			curPos += pos;
+			
+			TrimString(byte);
+			
+			if (byte[0])
+			{
+				this.patchcheck[this.lencheck] = StringToInt(byte, 16);
+				this.lencheck++;
+			}
+		}
+
+		if(!StrEqual(this.orig, this.patchcheck))
+		{
+			SetFailState("%s opcode is not correct, Memory is %x, conf is %x", key, this.orig, this.patchcheck);
+		}
+		return true;
+	}
 }
 
 mem_patch g_isExclusiveToLobbyConnectionsPatch;
@@ -96,6 +131,12 @@ public void OnPluginStart()
 	g_replyChallengePatch2.Init(conf, "CBaseServer::ReplyChallenge_Patch2", replyChallengeAddr);
 	g_replyChallengePatch3.Init(conf, "CBaseServer::ReplyChallenge_Patch3", replyChallengeAddr);
 	g_replyChallengePatch4.Init(conf, "CBaseServer::ReplyChallenge_Patch4", replyChallengeAddr);
+
+	g_isExclusiveToLobbyConnectionsPatch.Check(conf, "CBaseServer::IsExclusiveToLobbyConnections_Patch_Check");
+	g_replyChallengePatch1.Check(conf, "CBaseServer::ReplyChallenge_Patch1_Check");
+	g_replyChallengePatch2.Check(conf, "CBaseServer::ReplyChallenge_Patch2_Check");
+	g_replyChallengePatch3.Check(conf, "CBaseServer::ReplyChallenge_Patch3_Check");
+	g_replyChallengePatch4.Check(conf, "CBaseServer::ReplyChallenge_Patch4_Check");
 
 	g_isExclusiveToLobbyConnectionsPatch.Apply();
 	g_replyChallengePatch1.Apply();
