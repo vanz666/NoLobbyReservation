@@ -96,7 +96,7 @@
 					存在字符串 public
 					汇编代码 test al, al
 				*/
-				"windows" "1428"
+				"windows" "1507"
 			}
 		
 			"CBaseServer::ReplyChallenge_Patch3"
@@ -105,7 +105,7 @@
 					linux LobbyID mov dword ptr [esp+4], 0FFFFFFFFh
 					windows LobbyID push 0FFFFFFFFh
 				*/
-				"windows" "1534"
+				"windows" "1613"
 				"linux" "1001"
 			}
 			
@@ -115,7 +115,7 @@
 					linux LobbyID mov dword ptr [esp+8], 0FFFFFFFFh
 					windows LobbyID push 0FFFFFFFFh
 				*/
-				"windows" "1548"
+				"windows" "1627"
 				"linux" "1009"
 			}
 		}
