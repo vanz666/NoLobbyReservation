@@ -48,18 +48,18 @@
 		
 			"CBaseServer::ReplyChallenge_Patch2"
 			{
-				"windows" "1428"
+				"windows" "1507"
 			}
 		
 			"CBaseServer::ReplyChallenge_Patch3"
 			{
-				"windows" "1534"
+				"windows" "1613"
 				"linux" "1001"
 			}
 			
 			"CBaseServer::ReplyChallenge_Patch4"
 			{
-				"windows" "1548"
+				"windows" "1627"
 				"linux" "1009"
 			}
 		}
