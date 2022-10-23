@@ -59,7 +59,7 @@
 			
 			"CBaseServer::ReplyChallenge_Patch4"
 			{
-				"windows" "1527"
+				"windows" "1627"
 				"linux" "1009"
 			}
 		}
