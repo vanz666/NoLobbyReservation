@@ -1,0 +1,168 @@
+"Games"
+{
+	"csgo"
+	{
+		"Keys"
+		{
+			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
+			{
+				/* 
+					原始汇编代码 84 C0 test al, al
+					更改后为 30 C0 xor al, al
+				*/
+				"windows" "30 C0"
+				"linux" "30 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch1"
+			{
+				"windows" "30 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch2"
+			{
+				"windows" "30 C0"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch3"
+			{
+				"windows" "00"
+				"linux" "6A 00"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch4"
+			{
+				"windows" "00"
+				"linux" "6A 00"
+			}
+
+			
+			"CBaseServer::IsExclusiveToLobbyConnections_Patch_Check"
+			{
+				"windows" "84 C0"
+				"linux" "84 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch1_Check"
+			{
+				"windows" "84 C0"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch2_Check"
+			{
+				"windows" "84 C0"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch3_Check"
+			{
+				"windows" "FF"
+				"linux" "6A FF"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch4_Check"
+			{
+				"windows" "FF"
+				"linux" "6A FF"
+			}
+		}
+
+		"Offsets"
+		{
+			"CBaseServer::IsExclusiveToLobbyConnections_Patch"
+			{
+				/*	linux 
+					test    al, al 
+				*/
+				"windows" "7"
+				"linux" "29"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch1"
+			{
+				/*
+					存在字符串 connect-retry
+					汇编代码 test al, al
+				*/
+				"windows" "994"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch2"
+			{
+				/*
+					存在字符串 public
+					汇编代码 test al, al
+				*/
+				"windows" "1507"
+			}
+		
+			"CBaseServer::ReplyChallenge_Patch3"
+			{
+				/*
+					linux LobbyID mov dword ptr [esp+4], 0FFFFFFFFh
+					windows LobbyID push 0FFFFFFFFh
+				*/
+				"windows" "1613"
+				"linux" "890"
+			}
+			
+			"CBaseServer::ReplyChallenge_Patch4"
+			{
+				/*
+					linux LobbyID mov dword ptr [esp+8], 0FFFFFFFFh
+					windows LobbyID push 0FFFFFFFFh
+				*/
+				"windows" "1627"
+				"linux" "892"
+			}
+		}
+
+		"Addresses"
+		{
+			"CBaseServer::IsExclusiveToLobbyConnections"
+			{
+				"windows"
+				{
+					"signature" "CBaseServer::IsExclusiveToLobbyConnections"
+				}
+				"linux"
+				{
+					"signature" "CBaseServer::IsExclusiveToLobbyConnections"
+				}
+			}
+		
+			"CBaseServer::ReplyChallenge"
+			{
+				"windows"
+				{
+					"signature" "CBaseServer::ReplyChallenge"
+				}
+				"linux"
+				{
+					"signature" "CBaseServer::ReplyChallenge"
+				}
+			}
+		}
+
+		"Signatures"
+		{
+			/*	目标函数在此字符串上方
+			   	"Server only accepting connections from game lobby %s %d.\n"
+			*/
+			"CBaseServer::IsExclusiveToLobbyConnections"
+			{
+				"library" "engine"
+				"windows" "\x8B\x01\x8B\x40\x5C\xFF\xD0\x84\xC0\x75\x2A\xC3"
+				"linux" "\x55\x89\xE5\x83\xEC\x08\x8B\x45\x08\x8B\x10\x8B\x52\x60\x81\xFA\x2A\x2A\x2A\x2A\x75\x2A\x0F\xB6\x80\x88\x02\x00\x00"
+			}
+			/*	目标函数存在字符串
+				"Server running with server_is_unavailable, ignoring challenge from %s\n"
+			 */
+			"CBaseServer::ReplyChallenge"
+			{
+				"library" "engine"
+				"windows" "\x55\x8B\xEC\x83\xE4\xF8\x81\xEC\x8C\x04\x00\x00"
+				"linux" "\x55\x89\xE5\x57\x56\x53\x81\xEC\x74\x04\x00\x00"
+			}
+		}
+	}
+}
