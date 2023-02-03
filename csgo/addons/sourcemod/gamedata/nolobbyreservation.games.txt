@@ -27,22 +27,18 @@
 			"CBaseServer::ReplyChallenge_Patch3"
 			{
 				"windows" "00"
-				"linux" "00 00 00 00"
+				"linux" "6A 00"
 			}
 			
 			"CBaseServer::ReplyChallenge_Patch4"
 			{
 				"windows" "00"
-				"linux" "00 00 00 00"
+				"linux" "6A 00"
 			}
 
 			
 			"CBaseServer::IsExclusiveToLobbyConnections_Patch_Check"
 			{
-				/* 
-					原始汇编代码 84 C0 test al, al
-					更改后为 30 C0 xor al, al
-				*/
 				"windows" "84 C0"
 				"linux" "84 C0"
 			}
@@ -60,13 +56,13 @@
 			"CBaseServer::ReplyChallenge_Patch3_Check"
 			{
 				"windows" "FF"
-				"linux" "FF FF FF FF"
+				"linux" "6A FF"
 			}
 			
 			"CBaseServer::ReplyChallenge_Patch4_Check"
 			{
 				"windows" "FF"
-				"linux" "FF FF FF FF"
+				"linux" "6A FF"
 			}
 		}
 
@@ -78,7 +74,7 @@
 					test    al, al 
 				*/
 				"windows" "7"
-				"linux" "19"
+				"linux" "29"
 			}
 		
 			"CBaseServer::ReplyChallenge_Patch1"
@@ -106,7 +102,7 @@
 					windows LobbyID push 0FFFFFFFFh
 				*/
 				"windows" "1613"
-				"linux" "1001"
+				"linux" "890"
 			}
 			
 			"CBaseServer::ReplyChallenge_Patch4"
@@ -116,7 +112,7 @@
 					windows LobbyID push 0FFFFFFFFh
 				*/
 				"windows" "1627"
-				"linux" "1009"
+				"linux" "892"
 			}
 		}
 
@@ -156,7 +152,7 @@
 			{
 				"library" "engine"
 				"windows" "\x8B\x01\x8B\x40\x5C\xFF\xD0\x84\xC0\x75\x2A\xC3"
-				"linux" "\x55\x89\xE5\x83\xEC\x18\x8B\x45\x08\x8B\x10\x89\x04\x24\xFF\x52\x60\x31\xD2"
+				"linux" "\x55\x89\xE5\x83\xEC\x08\x8B\x45\x08\x8B\x10\x8B\x52\x60\x81\xFA\x2A\x2A\x2A\x2A\x75\x2A\x0F\xB6\x80\x88\x02\x00\x00"
 			}
 			/*	目标函数存在字符串
 				"Server running with server_is_unavailable, ignoring challenge from %s\n"
@@ -165,7 +161,7 @@
 			{
 				"library" "engine"
 				"windows" "\x55\x8B\xEC\x83\xE4\xF8\x81\xEC\x8C\x04\x00\x00"
-				"linux" "\x55\x89\xE5\x57\x56\x53\x81\xEC\x8C\x06\x00\x00\x8B\x5D\x08"
+				"linux" "\x55\x89\xE5\x57\x56\x53\x81\xEC\x74\x04\x00\x00"
 			}
 		}
 	}
